@@ -72,7 +72,6 @@ export default class App extends Component {
               <Error handleSearch={this.handleSearch} errors={this.state.errors} error={this.state.error} /> :
               <Search handleSearch={this.handleSearch} />
         }
-        <button onClick={this.handleClick}>Explore!</button>
         <Footer />
       </div>
     )
