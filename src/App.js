@@ -4,6 +4,7 @@ import Search from './components/Search';
 import City from './components/City';
 import Error from './components/Error';
 import Footer from './components/Footer';
+//import Weather from './components/Weather';
 import "./App.css";
 
 export default class App extends Component {
@@ -30,7 +31,7 @@ export default class App extends Component {
   }
   handleSearch = async (cityInput) => {
     try {
-      let locationResponse = await axios.get(`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION}&q=${cityInput}&format=json&limit=1`);
+      let locationResponse = await axios.get(`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION}&q=${cityInput}`);
       // console.log(locationResponse.data[0]);
       console.log('display name', locationResponse.data[0].display_name);
       console.log('latitude', locationResponse.data[0].lat);
@@ -56,9 +57,31 @@ export default class App extends Component {
     this.fetchWeather();
     this.fetchMovies();
   }
+  
+  fetchWeather = async () => {
+    try {
+      // local host will need to be placed in the .env file
+      // after heroku deployment update to the deployed url
+      // const dailyForecast = await axios.get(`${WEATHER_URL}?&lat=0000&lon=0000`);
+      const dailyForecast = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/weather`,
+        {
+          params: {
+            lat: this.state.latitude,
+            lon: this.state.longitude
+          }
+        });
+      this.setState({
+        forecast: dailyForecast.data
+      });
+    } catch (error) {
+      this.setState({ errors: `${error.message}` });
+      // console.log('Error Found:', error.message);
+    }
+  }
   handleClick = async () => {
-    let API = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATION}&q=Venice`;
-    let res = await axios.get(API);
+    this.setState({cityInput: this.cityName.value})
+    let locAPI = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATION}q=${this.cityInput}`;
+    let res = await axios.get(locAPI);
     console.log(res.data);
   }
   render() {

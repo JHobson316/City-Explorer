@@ -9,7 +9,6 @@ class Search extends React.Component {
       textInput : React.createRef()
     };
   }
-
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.handleSearch(this.state.textInput.current.value);
