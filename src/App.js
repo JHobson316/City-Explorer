@@ -4,6 +4,7 @@ import Search from './components/Search';
 import City from './components/City';
 import Error from './components/Error';
 import Footer from './components/Footer';
+import "./App.css";
 
 export default class App extends Component {
   constructor(props) {
