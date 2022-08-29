@@ -82,6 +82,7 @@ export default class App extends Component {
     this.setState({cityInput: this.cityName.value})
     let locAPI = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATION}q=${this.cityInput}`;
     let res = await axios.get(locAPI);
+    
     console.log(res.data);
   }
   render() {
