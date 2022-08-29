@@ -1,10 +1,6 @@
 import React from 'react';
-// B O O T S T R A P P I N ~
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// C S S
-//import 'bootstrap/dist/css/bootstrap.min.css';
-//import './Search.css';
 
 class Search extends React.Component {
   constructor(props) {
@@ -24,7 +20,7 @@ class Search extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         <Form.Group>
           <Form.Label>Enter a city to begin</Form.Label>
-          <Form.Control placeholder="where would you like to explore?..." size="lg" type="text" ref={this.state.textInput} />
+          <Form.Control placeholder="Pick Your Destination" size="lg" type="text" ref={this.state.textInput} />
         </Form.Group>
         <Button variant="primary" type="submit">
           Explore!

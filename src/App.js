@@ -1,8 +1,32 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import Search from './components/Search';
+import City from './components/City';
+import Error from './components/Error';
+import Footer from './components/Footer';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      haveSearched: false,
+      cityInput: '',
+      cityData: {},
+      errors: [],
+      cityName: '',
+      // backend server : licationIq
+      latitude: '',
+      longitude: '',
+      // backend server : weathbit API
+      forecast: [],
+      // backend server : movie database API
+      movies: [],
+    }
+  }
+  showSearch = () => {
+    this.setState({ haveSearched: false });
+  }
   handleSearch = async (cityInput) => {
     try {
       let locationResponse = await axios.get(`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION}&q=${cityInput}&format=json&limit=1`);
@@ -39,10 +63,17 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <h2>Yo</h2>
+        <h2>City Explorer</h2>
         <br/>
-        <Search handleSearch={this.handleSearch} />
+        {
+          this.state.haveSearched && this.state.errors.length === 0 ?
+            <City handleShowSearch={this.showSearch} cityData={this.state.cityData} /> :
+            this.state.errors.length !== 0 ?
+              <Error handleSearch={this.handleSearch} errors={this.state.errors} error={this.state.error} /> :
+              <Search handleSearch={this.handleSearch} />
+        }
         <button onClick={this.handleClick}>Explore!</button>
+        <Footer />
       </div>
     )
   }
